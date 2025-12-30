@@ -123,6 +123,9 @@ app.get("/api/search", async (req, res) => {
 app.post("/api/share", (req, res) => {
   const { ownerName, playlist } = req.body;
 
+  // body 구조 확인용 로그
+  console.log("share body:", req.body);
+
   if (!Array.isArray(playlist) || playlist.length === 0) {
     return res
       .status(400)
@@ -145,12 +148,11 @@ app.post("/api/share", (req, res) => {
 
   saveDB(db);
 
-  const FRONT_BASE_URL = process.env.FRONT_BASE_URL || "http://localhost:3000";
-
+  const FRONT_BASE_URL =
+    process.env.FRONT_BASE_URL || "http://localhost:3000";
   const shareUrl = `${FRONT_BASE_URL}/share/${id}`;
 
-
-  res.json({
+  return res.json({
     success: true,
     shareId: id,
     shareUrl,
