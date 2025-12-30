@@ -37,21 +37,12 @@ export default function ShareCreatePage() {
   }, []);
 
   const handleCreateShare = async () => {
-    if (!playlist.length) {
-      alert("공유할 플레이리스트가 없어요!");
-      navigate("/");
-      return;
-    }
+    if (!playlist.length) return;
 
-    if (!ownerName.trim()) {
-      alert("플레이리스트 이름에 사용될 닉네임을 입력해 주세요 🙂");
-      return;
-    }
-
-    // 이름은 localStorage 에도 저장해두면 다음에 기본값으로 써먹기 좋음
-    localStorage.setItem("ownerName", ownerName.trim());
+    if (!ownerName.trim()) return;
 
     setSharing(true);
+
     try {
       const res = await fetch(`${API_BASE}/api/share`, {
         method: "POST",
@@ -65,12 +56,17 @@ export default function ShareCreatePage() {
       const data = await res.json();
       if (!data.success) throw new Error();
 
-      await navigator.clipboard.writeText(data.shareUrl);
-      alert("공유 링크가 복사되었습니다! 🎧\n\n" + data.shareUrl);
+      // 🔥 iOS friendly 방식
+      try {
+        await navigator.clipboard.writeText(data.shareUrl);
+        alert("공유 링크가 복사되었습니다! 🎧\n\n" + data.shareUrl);
+      } catch {
+        // 🔥 fallback
+        window.prompt("링크를 복사해 주세요", data.shareUrl);
+      }
 
       navigate(`/share/${data.shareId}`);
     } catch (e) {
-      console.error(e);
       alert("공유 중 오류가 발생했어요 😢");
     } finally {
       setSharing(false);
