@@ -42,6 +42,9 @@ function MainApp() {
   const [loading, setLoading] = useState(false);
   const MAX_PLAYLIST = 10;
   const navigate = useNavigate();
+  const API_BASE =
+    process.env.REACT_APP_API_BASE || "http://localhost:4000";
+
 
   const [playlist, setPlaylist] = useState(() => {
     try {
@@ -72,7 +75,7 @@ function MainApp() {
 
     try {
       const res = await fetch(
-        `http://localhost:4000/api/search?q=${encodeURIComponent(query)}`
+        `${API_BASE}/api/search?q=${encodeURIComponent(query)}`
       );
       const data = await res.json();
       setTracks(data.tracks?.items ?? []);

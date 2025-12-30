@@ -6,6 +6,7 @@ import "./App.css";
 export default function SharePage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:4000";
 
   const [playlist, setPlaylist] = useState(null);
   const [ownerName, setOwnerName] = useState("");
@@ -14,7 +15,7 @@ export default function SharePage() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch(`http://localhost:4000/api/share/${id}`);
+        const res = await fetch(`${API_BASE}/api/share/${id}`);
         const data = await res.json();
 
         if (!data.success) throw new Error();

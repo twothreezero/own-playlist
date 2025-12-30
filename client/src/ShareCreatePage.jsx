@@ -9,6 +9,7 @@ export default function ShareCreatePage() {
   const [loading, setLoading] = useState(true);
   const [sharing, setSharing] = useState(false);
   const MAX_PLAYLIST = 10;
+  const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:4000";
 
   // 🔹 만든 사람 이름
   const [ownerName, setOwnerName] = useState("");
@@ -52,7 +53,7 @@ export default function ShareCreatePage() {
 
     setSharing(true);
     try {
-      const res = await fetch("http://localhost:4000/api/share", {
+      const res = await fetch(`${API_BASE}/api/share`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
