@@ -13,6 +13,10 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // 🔥 JSON body 파싱
 
+app.listen(4000, () => {
+  console.log("Server running on http://localhost:4000");
+});
+
 // 🔍 모든 요청 로그 찍기 (디버깅용)
 app.use((req, res, next) => {
   console.log(`[REQ] ${req.method} ${req.url}`);
