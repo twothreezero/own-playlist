@@ -1,0 +1,32 @@
+/* 전역 기본 스타일 (Reset + Body) */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
+    "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  line-height: 1.4;
+  text-decoration: none;
+  list-style: none;
+  color: #1d1d1d;
+  background-color: #ededed;
+  background-image: url("./img/background.svg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* 모든 요소 공통 box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 전체 높이 100% 사용 */
+html,
+body,
+#root {
+  height: 100%;
+}
