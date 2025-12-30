@@ -4,6 +4,9 @@ import ShareCreatePage from "./ShareCreatePage.jsx";
 import SharePage from "./SharePage";
 import "./App.css";
 
+// ✅ 백엔드 주소 (로컬: 4000, 배포 시 ENV 로 교체)
+const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:4000";
+
 // 🔥 검색 & 공유 공통 UI
 function HeaderAction({ mode, query, setQuery, loading, onSearch, onShare }) {
   if (mode === "search") {
@@ -42,9 +45,6 @@ function MainApp() {
   const [loading, setLoading] = useState(false);
   const MAX_PLAYLIST = 10;
   const navigate = useNavigate();
-  const API_BASE =
-    process.env.REACT_APP_API_BASE || "http://localhost:4000";
-
 
   const [playlist, setPlaylist] = useState(() => {
     try {
@@ -239,6 +239,7 @@ function MainApp() {
                             className="track-img"
                             src={track.album.images[2].url}
                             alt={track.name}
+                            onClick={() => window.open(track.external_urls.spotify, "_blank")}
                           />
                         )}
 
