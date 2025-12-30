@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./App.css";
 
+const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:4000";
+
 export default function SharePage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:4000";
 
   const [playlist, setPlaylist] = useState(null);
   const [ownerName, setOwnerName] = useState("");

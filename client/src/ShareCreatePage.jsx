@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./App.css";
 
+const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:4000";
+
 export default function ShareCreatePage() {
   const navigate = useNavigate();
   const [playlist, setPlaylist] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sharing, setSharing] = useState(false);
   const MAX_PLAYLIST = 10;
-  const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:4000";
 
   // 🔹 만든 사람 이름
   const [ownerName, setOwnerName] = useState("");
