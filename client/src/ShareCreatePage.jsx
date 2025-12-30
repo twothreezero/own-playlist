@@ -1,8 +1,9 @@
 // client/src/ShareCreatePage.jsx
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_BASE } from "./apiConfig";
 import "./App.css";
+
+import { API_BASE } from "./apiConfig";
 
 export default function ShareCreatePage() {
   const navigate = useNavigate();
@@ -11,9 +12,10 @@ export default function ShareCreatePage() {
   const [sharing, setSharing] = useState(false);
   const MAX_PLAYLIST = 10;
 
-  // 🔹 만든 사람 이름
+  // 만든 사람 이름
   const [ownerName, setOwnerName] = useState("");
 
+  // 로컬스토리지에서 플레이리스트 & 이름 불러오기
   useEffect(() => {
     try {
       const saved = localStorage.getItem("playlist");
@@ -36,37 +38,44 @@ export default function ShareCreatePage() {
     }
   }, []);
 
+  // 공유 페이지 생성 (클립보드는 X, 이동만 O)
   const handleCreateShare = async () => {
-    if (!playlist.length) return;
+    if (!playlist.length) {
+      alert("공유할 플레이리스트가 없어요!");
+      navigate("/");
+      return;
+    }
 
-    if (!ownerName.trim()) return;
+    if (!ownerName.trim()) {
+      alert("플레이리스트 이름에 사용될 닉네임을 입력해 주세요 🙂");
+      return;
+    }
+
+    const trimmedName = ownerName.trim();
+    localStorage.setItem("ownerName", trimmedName);
 
     setSharing(true);
-
     try {
       const res = await fetch(`${API_BASE}/api/share`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ownerName: ownerName.trim(),
+          ownerName: trimmedName,
           playlist,
         }),
       });
 
       const data = await res.json();
-      if (!data.success) throw new Error();
+      console.log("share create response:", data);
 
-      // 🔥 iOS friendly 방식
-      try {
-        await navigator.clipboard.writeText(data.shareUrl);
-        alert("공유 링크가 복사되었습니다! 🎧\n\n" + data.shareUrl);
-      } catch {
-        // 🔥 fallback
-        window.prompt("링크를 복사해 주세요", data.shareUrl);
+      if (!data.success || !data.shareId) {
+        throw new Error("공유 생성 실패");
       }
 
+      // ✅ 여기서는 링크 복사 안 하고, 공유 페이지로 이동만
       navigate(`/share/${data.shareId}`);
     } catch (e) {
+      console.error(e);
       alert("공유 중 오류가 발생했어요 😢");
     } finally {
       setSharing(false);
@@ -88,20 +97,20 @@ export default function ShareCreatePage() {
   return (
     <div className="app">
       <header className="header">
-        <button className="btn clear" onClick={() => navigate(-1)}>
+        <button className="btn clear" onClick={() => navigate("/")}>
           ← 돌아가기
         </button>
 
         <h1 className="title">Share Playlist 🎧</h1>
 
-        {/* 🔹 만든 사람 이름 입력 */}
+        {/* 만든 사람 이름 입력 */}
         <div className="share-box">
           <div className="share-text">
             <input className="share-text__input" placeholder="예: 봄날의 햇살 등" value={ownerName} onChange={(e) => setOwnerName(e.target.value)} />
             의 플레이리스트.
           </div>
           <button className="btn share-btn" type="button" disabled={sharing} onClick={handleCreateShare}>
-            {sharing ? "공유 링크 생성 중..." : <span class="material-icons">link</span>}
+            {sharing ? "공유 페이지 생성 중..." : "공유하기"}
           </button>
         </div>
       </header>
