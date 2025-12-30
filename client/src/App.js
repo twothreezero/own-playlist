@@ -2,10 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import ShareCreatePage from "./ShareCreatePage.jsx";
 import SharePage from "./SharePage";
+import { API_BASE } from "./apiConfig";
 import "./App.css";
-
-// ✅ 백엔드 주소 (로컬: 4000, 배포 시 ENV 로 교체)
-const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:4000";
 
 // 🔥 검색 & 공유 공통 UI
 function HeaderAction({ mode, query, setQuery, loading, onSearch, onShare }) {

@@ -1,9 +1,8 @@
 // client/src/ShareCreatePage.jsx
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "./apiConfig";
 import "./App.css";
-
-const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:4000";
 
 export default function ShareCreatePage() {
   const navigate = useNavigate();
