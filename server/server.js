@@ -145,7 +145,10 @@ app.post("/api/share", (req, res) => {
 
   saveDB(db);
 
-  const shareUrl = `http://localhost:3000/share/${id}`;
+  const FRONT_BASE_URL = process.env.FRONT_BASE_URL || "http://localhost:3000";
+
+  const shareUrl = `${FRONT_BASE_URL}/share/${id}`;
+
 
   res.json({
     success: true,
