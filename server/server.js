@@ -10,11 +10,8 @@ import { fileURLToPath } from "url";
 dotenv.config();
 
 const app = express();
-app.use(
-  cors({
-    origin: "https://own-playlist.netlify.app",
-  })
-); app.use(express.json()); // 🔥 JSON body 파싱
+app.use(cors());
+app.use(express.json());
 
 app.listen(4000, () => {
   console.log("Server running on http://localhost:4000");
