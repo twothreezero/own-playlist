@@ -7,6 +7,7 @@ import "./Card.css";
 
 import previous from "./img/previous.svg";
 import play from "./img/play.svg";
+import pause from "./img/pause.svg";
 import next from "./img/next.svg";
 
 import { API_BASE } from "./apiConfig";
@@ -405,11 +406,10 @@ function MainApp() {
                           <div className="track__dec card">
                             {track.artists.map((a) => a.name).join(", ")} · {track.album.name}
                           </div>
-
                           {track.preview_url && <audio className="track__audio" controls src={track.preview_url} />}
                           <div className="player">
                             <img src={previous} alt="previous" className="previous" />
-                            <img src={play} alt="play" className="play" />
+                            <img src={pause} alt="pause" className="pause" />
                             <img src={next} alt="next" className="next" />
                           </div>
                         </div>

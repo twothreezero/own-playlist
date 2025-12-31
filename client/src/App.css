@@ -83,6 +83,10 @@
   gap: 6px;
 }
 
+.tab-inner > span {
+  color: #1d1d1d;
+}
+
 .tab-icon {
   font-size: 18px;
 }

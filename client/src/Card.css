@@ -1,83 +1,170 @@
+/* =========================
+   카드 전용 리스트 레이아웃
+   (플레이리스트 탭에서만 사용)
+========================= */
+
 .card-list {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
+  gap: 12px;
 }
+
+/* =========================
+   카드 박스
+========================= */
 
 .card-box {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+
+  width: 100%;
+  max-width: 100%;
+
+  height: 100%;
   min-height: 200px;
-  background-image: url("./img/card-background.svg");
-  background-size: contain;
+
+  /* 배경 카드 */
+  background-image: url("./img/card-bg.svg");
+  background-size: 100% auto;
   background-position: center;
   background-repeat: no-repeat;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 0 12px;
+
+  /* ⬇️ 중요 — 내부 라인 기준으로 컨텐츠 정렬 */
+  padding: clamp(14px, 3.2vw, 22px);
+
+  border-radius: 18px; /* 배경 라운드와 느낌 맞춤 */
+  border: none; /* 기존 테두리 제거 */
 }
 
+/* 카드 안 실제 콘텐츠 래퍼 */
 .card-info {
   display: flex;
-  gap: 12px;
+  flex: 1;
+  align-items: center;
+  gap: clamp(8px, 2vw, 14px);
 }
 
+/* =========================
+   앨범 이미지
+========================= */
+
 .card-img {
-  width: 100px;
-  height: 100px;
-  border-radius: 6px;
+  width: clamp(56px, 18vw, 80px);
+  height: clamp(56px, 18vw, 80px);
+  border-radius: 10px;
   object-fit: cover;
   flex-shrink: 0;
   cursor: pointer;
-  margin-left: 12px;
 }
+
+/* =========================
+   텍스트 영역
+========================= */
 
 .track {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 0; /* ellipsis 제대로 동작하게 */
+  width: 100%;
+  gap: 4px;
 }
 
+/* 카드 안의 타이틀/설명은 .card 클래스가 추가되어 있음 */
 .track__title.card {
-  max-width: 250px;
-  font-size: 14px;
+  font-size: clamp(13px, 3.4vw, 16px);
+  font-weight: 700;
+  margin-bottom: 4px;
+
+  max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: bold;
 }
 
 .track__dec.card {
-  max-width: 250px;
-  font-size: 12px;
+  font-size: clamp(11px, 3vw, 14px);
   opacity: 0.7;
+
+  max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 4px;
 }
 
+/* 오디오 플레이어는 카드 폭에 맞춰 유동적으로 */
 .track__audio {
-  width: 180px;
+  margin-top: 6px;
+  width: min(220px, 100%);
 }
+
+/* =========================
+   가짜 플레이어 아이콘 영역
+========================= */
 
 .player {
+  margin-top: 8px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 15px;
-  margin-top: 15px;
+  gap: 50px;
 }
 
-.player > img {
-  object-fit: contain;
-  width: 50px;
-  height: 30px;
+.player img {
+  width: clamp(18px, 5vw, 24px);
+  height: auto;
 }
 
-.player > .previous,
-.player > .next {
-  height: 20px;
+/* =========================
+   삭제 버튼 (카드 우측 상단에 고정)
+========================= */
+
+.card-box .btn.remove {
+  padding: 4px 6px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+}
+
+/* =========================
+   모바일 (480px 이하)
+========================= */
+
+@media (max-width: 480px) {
+  .card-box {
+    padding: 14px;
+    gap: 10px;
+    background-size: cover; /* 모바일은 꽉 차게 */
+  }
+
+  .card-info {
+    align-items: flex-start;
+  }
+
+  .card-img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .track__title.card {
+    white-space: normal; /* 두 줄까지 자연스럽게 */
+  }
+
+  .track__dec.card {
+    white-space: normal;
+  }
+
+  .player {
+    margin-top: 6px;
+    gap: 8px;
+  }
+
+  .card-box .btn.remove {
+    top: 6px;
+    right: 6px;
+  }
 }
