@@ -6,7 +6,6 @@ import "./App.css";
 import "./Card.css";
 
 import previous from "./img/previous.svg";
-import play from "./img/play.svg";
 import pause from "./img/pause.svg";
 import next from "./img/next.svg";
 
