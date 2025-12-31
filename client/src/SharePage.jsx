@@ -2,6 +2,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./App.css";
+import "./Card.css";
+
+import previous from "./img/previous.svg";
+import play from "./img/play.svg";
+import next from "./img/next.svg";
 
 import { API_BASE } from "./apiConfig";
 
@@ -107,7 +112,7 @@ export default function SharePage() {
 
       <main className="content">
         <div className="scroll-area">
-          <ul className="track-list">
+          {/* <ul className="track-list">
             {playlist.map((track) => (
               <li key={track.id} className="track-item">
                 <div className="track-info">
@@ -127,6 +132,35 @@ export default function SharePage() {
                     </div>
 
                     {track.preview_url && <audio className="track__audio" controls src={track.preview_url} />}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul> */}
+          <ul className="card-list">
+            {playlist.map((track) => (
+              <li key={track.id} className="card-box">
+                <div className="card-info">
+                  {track.album?.images?.[2] && (
+                    <img
+                      className="card-img"
+                      src={track.album.images[2].url}
+                      alt={track.name}
+                      onClick={() => window.open(track.external_urls.spotify, "_blank")}
+                    />
+                  )}
+                  <div className="track">
+                    <div className="track__title card">{track.name}</div>
+                    <div className="track__dec card">
+                      {track.artists.map((a) => a.name).join(", ")} · {track.album.name}
+                    </div>
+
+                    {track.preview_url && <audio className="track__audio" controls src={track.preview_url} />}
+                    <div className="player">
+                      <img src={previous} alt="previous" className="previous" />
+                      <img src={play} alt="play" className="play" />
+                      <img src={next} alt="next" className="next" />
+                    </div>
                   </div>
                 </div>
               </li>
