@@ -83,8 +83,12 @@
   gap: 6px;
 }
 
-.tab-inner > span {
+.tab span {
   color: #1d1d1d;
+}
+
+.tab--active span {
+  color: #fff;
 }
 
 .tab-icon {
@@ -104,7 +108,7 @@
   height: 22px;
   border-radius: 50%;
   background-color: #1d1d1d;
-  color: #fff;
+  color: #fff !important;
   font-size: 12px;
   font-weight: 600;
   display: flex;
